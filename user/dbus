@@ -1,0 +1,4 @@
+type = process
+command = /etc/dinit/user/scripts/dbus.sh --print-address 3
+smooth-recovery=true
+ready-notification = pipefd:3
