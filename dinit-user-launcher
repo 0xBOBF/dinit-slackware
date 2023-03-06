@@ -4,7 +4,7 @@
 # shutdown dinit cleanly.
 # 
 
-dinit_user_launcher () {
+dinit_user_start () {
   # Create the runtime directory and set user's ownership:
   # We need to do this sine we will run before elogind, and
   # we want to link dinitctl here for runtime operation.
@@ -17,32 +17,17 @@ dinit_user_launcher () {
   # once XDG_RUNTIME_DIR is set:
   su -l -c "dinit -d /etc/dinit/user -p $home/.dinitctl &" $name
   su -l -c "ln -s $home/.dinitctl $runtimedir/dinitctl" $name
+}
 
-  # Monitor system dbus for logind's UserRemoved message. Keep the pipe in user's runtimedir.
-  pipe="$runtimedir/logind.pipe"
-  mkfifo $pipe && chown ${name}:users $pipe
-  gdbus monitor --system --dest org.freedesktop.login1 --object-path=/org/freedesktop/login1 > $pipe &
-  gdbus_pid="$!"
-  trap "kill $gdbus_pid && rm -f $pipe" EXIT
-
-  while read -r line
-  do
-    if [ "$(echo "$line" | grep -o 'UserRemoved (uint32 [0-9]*' | cut -d' ' -f 3)" = "$uid" ]; then
-      break
-    fi
-  done < $pipe 
-
-  # Anything executed after here is after logout:
+dinit_user_stop () {
   su -l -c "dinitctl shutdown" $name
 }
 
-# Get the user name from $1 or $PAM_USER if launched from PAM.
+# Get the user name PAM_USER:
 if [ -n "$PAM_USER" ]; then
   name=$PAM_USER
-elif [ -n "$1" ]; then
-  name=$1
 else
-  echo "Error: User name wasn't supplied."
+  echo "Error: $0 wasn't called from PAM."
   exit 1
 fi
 
@@ -54,5 +39,17 @@ if [ -z "$uid" ]; then
 fi
 home="$(grep $name /etc/passwd | cut -d: -f6)"
 
-# Run the launcher and background:
-dinit_user_launcher &
+# Get a count of how many sessions the user has registered with elogind:
+session_cnt="$(loginctl show-user $PAM_USER | sed -n 's/^Sessions=//p' | wc -w)"
+
+# Start or stop dinit, based on PAM_TYPE. 
+# Only run start if there are no existing sessions:
+if [ "$PAM_TYPE" = "open_session" -a "$session_cnt" -lt "1" ]; then
+  dinit_user_start
+  echo "Session Open" > $home/dinit-user-launcher.log
+  sleep 3
+# Only stop if this is the last open session:
+elif [ "$PAM_TYPE" = "close_session" -a "$session_cnt" -le "1" ]; then
+  dinit_user_stop
+  echo "Session Close" > $home/dinit-user-launcher.log
+fi
