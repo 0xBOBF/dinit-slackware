@@ -4,6 +4,9 @@
 # shutdown dinit cleanly.
 # 
 
+# Location of dinit's user services:
+dinit_user_srv="/etc/dinit/user"
+
 dinit_user_start () {
   # Create the runtime directory and set user's ownership:
   # We need to do this sine we will run before elogind, and
@@ -15,8 +18,15 @@ dinit_user_start () {
   # runtimedir, so elogind doesn't delete it automatically at session end.
   # Link the dinitctl socket to the runtimedir, so dinitctl defaults work
   # once XDG_RUNTIME_DIR is set:
-  su -l -c "dinit -d /etc/dinit/user -p $home/.dinitctl &" $name
+  su -l -c "dinit -d $dinit_user_srv -p $home/.dinitctl &" $name
   su -l -c "ln -s $home/.dinitctl $runtimedir/dinitctl" $name
+
+  # If a dbus service is present, start it so that pam_elogind.so has a chance
+  # to detect it and set DBUS_SESSION_BUS_ADDRESS (pam_elogind.so should be loaded
+  # next in the pam stack):
+  if [ -r "${dinit_user_srv}/dbus" ]; then
+    su -l -c "dinitctl start dbus" $name
+  fi
 }
 
 dinit_user_stop () {
@@ -46,10 +56,7 @@ session_cnt="$(loginctl show-user $PAM_USER | sed -n 's/^Sessions=//p' | wc -w)"
 # Only run start if there are no existing sessions:
 if [ "$PAM_TYPE" = "open_session" -a "$session_cnt" -lt "1" ]; then
   dinit_user_start
-  echo "Session Open" > $home/dinit-user-launcher.log
-  sleep 3
 # Only stop if this is the last open session:
 elif [ "$PAM_TYPE" = "close_session" -a "$session_cnt" -le "1" ]; then
   dinit_user_stop
-  echo "Session Close" > $home/dinit-user-launcher.log
 fi
