@@ -9,7 +9,7 @@ dinit_user_srv="/etc/dinit/user"
 
 dinit_user_start () {
   # Create the runtime directory and set user's ownership:
-  # We need to do this sine we will run before elogind, and
+  # We need to do this since we will run before elogind, and
   # we want to link dinitctl here for runtime operation.
   runtimedir="/run/user/$uid"
   mkdir -p "$runtimedir" && chown -R ${name}:users $runtimedir
