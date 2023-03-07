@@ -1,0 +1,7 @@
+# Start the cgconfig service:
+
+type = scripted
+command = /etc/dinit/system/scripts/cgconfig.sh start
+stop-command = /etc/dinit/system/scripts/cgconfig.sh stop
+restart = false
+depends-on = nonroot-fs

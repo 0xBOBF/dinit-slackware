@@ -1,0 +1,6 @@
+# Support traditional /etc/rc.d/rc.sysvinit scripts
+
+type = scripted
+command = /etc/dinit/system/scripts/rc.sysvinit.sh
+restart = false
+depends-on = tempfiles
