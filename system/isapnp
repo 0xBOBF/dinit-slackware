@@ -1,6 +1,0 @@
-# Configure ISA Plug-and-Play devices.
-
-type = scripted
-command = /etc/dinit/system/scripts/isapnp.sh
-restart = false
-depends-on = root-fs

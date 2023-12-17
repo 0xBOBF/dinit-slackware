@@ -1,0 +1,8 @@
+# Complete the gnome-keyring-daemon startup:
+
+type = scripted
+command = /usr/bin/gnome-keyring-daemon --start
+stop-command = /usr/bin/pkill -fu $USER gnome-keyring-daemon
+restart = false
+
+depends-on = dbus

@@ -1,0 +1,7 @@
+# Set rpc kernel parameters with sysctl
+
+type = scripted
+command = /etc/dinit.d/scripts/rpc-pre.sh start
+logfile = /var/log/rpc.log
+
+depends-on = rcboot

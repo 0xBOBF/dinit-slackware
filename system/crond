@@ -1,0 +1,12 @@
+# crond has a problem where it cant be run directly from dinit,
+# reporting the error: "setpgid: Operation not permitted"
+# Hacky fix is to run it from a script crond.sh and write the pid
+# to a file so dinit can track it as a bgprocess.
+
+type = bgprocess
+command = /etc/dinit.d/scripts/crond.sh "/run/crond.pid"
+logfile = /var/log/crond.log
+pid-file = /run/crond.pid
+smooth-recovery = yes
+
+depends-on = rcboot

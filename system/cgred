@@ -1,7 +1,0 @@
-# Start the cgred service:
-
-type = scripted
-command = /etc/dinit/system/scripts/cgred.sh start
-stop-command = /etc/dinit/system/scripts/cgred.sh stop
-restart = false
-depends-on = cgconfig

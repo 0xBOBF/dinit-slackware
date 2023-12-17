@@ -1,6 +1,9 @@
-# Configure kernel parameters
+# Set kernel parameters with sysctl
 
 type = scripted
-command = /etc/dinit/system/scripts/sysctl.sh
+command = /etc/dinit.d/scripts/sysctl.sh start
 restart = false
-depends-on = root-fs
+logfile = /var/log/sysctl.log
+
+depends-on = modules
+depends-on = rootrw

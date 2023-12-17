@@ -1,0 +1,8 @@
+# gnome-remote-desktop daemon
+
+type = process
+command = /usr/libexec/gnome-remote-desktop-daemon
+logfile = $XDG_RUNTIME_DIR/gnome-remote-desktop.log
+smooth-recovery = true
+
+#depends-on = 

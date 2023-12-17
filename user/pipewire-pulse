@@ -1,0 +1,8 @@
+# pipewire-pulse daemon
+
+type = process
+command = /usr/bin/pipewire-pulse
+logfile = $XDG_RUNTIME_DIR/pipewire-pulse.log
+smooth-recovery = true
+
+depends-on = pipewire

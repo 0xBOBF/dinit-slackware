@@ -1,0 +1,8 @@
+# GPM mouse server
+
+type = process
+command = /usr/sbin/gpm -D -m /dev/mouse imps2
+logfile = /var/log/gpm.log
+smooth-recovery = true
+
+depends-on = rcboot

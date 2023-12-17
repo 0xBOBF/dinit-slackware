@@ -1,6 +1,0 @@
-# Open any volumes created by cryptsetup.
-
-type = scripted
-command = /etc/dinit/system/scripts/cryptsetup.sh
-restart = false
-depends-on = lvm

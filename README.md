@@ -1,34 +1,26 @@
-# Slackware Dinit Project
+# Dinit Services for Slackware
+This project's goal is to create dinit services for use on Slackware Linux. This includes both system services and user services.
 
-Dinit is a service manager that can be used for user or system services.
+## Dinit System Services
+System services managed by dinit are those that are traditionally found in the `/etc/rc.d/` directory on Slackware linux. Equivalent dinit services are installed at `/etc/dinit.d/system/`. 
 
-This project is an attempt at utilizing Dinit in Slackware 15.0 and later versions. 
+Not all services present in Slackware's `/etc/rc.d/` directory are converted to an equivalent dinit service yet. The list of services remaining to convert are listed in the TODO file of the git repository.
 
-The approach is split into two stages:
+## Dinit User Services
+User services managed by dinit are things like pipewire, dbus, wireplumber, gnome-keyring-daemon, etc. These services are installed to `/etc/dinit.d/user/` so that all users can control the same services/daemons.
 
-1. Incorporate Dinit as a user service manager
+## Dinit Scripts
+Support scripts are installed to `/etc/dinit.d/scripts/`. These scripts are either "oneshot" style service scripts used by dinit's system or user instance. The `dinit-user.sh` script used to hook the dinit user instance from PAM is also kept here.
 
-2. Incorporate Dinit as a system service manager, enabling it to act as an init system.
+## Controlling User Services
+The `dinitctl` program is installed to `/sbin/dinitctl` by default. A link in the user's path can be added to allow users easy access to dinitctl for controlling user daemons. E.g: `cd /usr/local/bin && ln -s /sbin/dinitctl ./dinitctl`.
 
-Further details of these stages is below.
+The provided script called `dinit-user.sh` is used to start and shutdown the user instance of dinit from the PAM stack. It can be hooked from pam using the `pam_exec.so` module.
 
-## Dinit User Service Manager
+E.g 1: For console logins, add the following line to `/etc/pam.d/login`, right before `pam_elogind.so` is started:
+`-session        optional        pam_exec.so /etc/dinit.d/scripts/dinit-user.sh`
 
-Dinit can stop/start/restart user owned services, and can be operated by the user. This provides a convenience for user's wanting better control over their services that otherwise would be starting via autostart scripts and otherwise provide little interaction.
+E.g 2: For GDM logins, add the following line to `/etc/pam.d/gdm-password`, right before `pam_elogind.so` is started:
+`-session optional       pam_exec.so /etc/dinit.d/scripts/dinit-user.sh`
 
-Many user services on Linux utilize the user session DBus so it needs to be one of the first services brought up. Furthermore, the `DBUS_SESSION_BUS_ADDRESS` variable is utilized by many programs, including user launched programs at runtime. Therefore we need to propagate this to the environment properly. A method for doing this already exists in the (e)logind pam module code, as long as the user DBus is found at `$XDG_RUNTIME_DIR/bus`, it will be properly set. Therefore the optimal place to startup the Dinit user service manager is in the PAM stack, prior to running the `pam_elogind.so` module.
-
-With the above information in mind, this stage will require setting up an activation call of Dinit during the user login stages of the PAM stack, and then creating appropriate service definitions for services that users need, e.g. DBus, Pipewire, Keyring, etc.
-
-## Dinit System Service Manager
-
-At the present moment, Slackware's system services are defined and started via the /etc/rc.d/* scripts. 
-
-To generate equivalent Dinit service definitions will require converting these into separate single service scripts, and then creating compatible Dinit service definitions. 
-
-Simpler service scripts can just be converted to an equivalent Dinit service definition, i.e. those that are just scripted to provide start/stop syntax and don't use any other logic can immediately be replaced by a Dinit service, since the Dinit service manager provides the start/stop interface. Services that have more scripted logic will need to be extracted and dinit can be instructed to run the required scripts when starting/stopping the service from the service definition file.
-
-This project will take longer to get to a usable state, due to the length of rc.S and rc.M that needs to be sliced up into compatible services. Testing wont be possible to accomplish until enough services are converted over to bring the system up to a usable state.
-
-Once all services are converted over, the kernel can be instructed to use dinit as the init program on the kernel command line and boot testing can commence. If a more permanent switch over is wanted, then the old /sbin/init program can be moved over to a new name, and dinit symlinked in its place.
-
+The same line can also be used in `sddm` to used dinit user services from that display manager.

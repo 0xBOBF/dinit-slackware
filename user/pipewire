@@ -1,0 +1,8 @@
+# pipewire daemon
+
+type = process
+command = /usr/bin/pipewire
+logfile = $XDG_RUNTIME_DIR/pipewire.log
+smooth-recovery = true
+
+depends-on = dbus

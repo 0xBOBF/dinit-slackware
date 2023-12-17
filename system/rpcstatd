@@ -1,0 +1,8 @@
+# rpc.statd daemon - needed to mount nfs
+
+type = process
+env-file = /etc/default/rpc
+command = /sbin/rpc.statd -F $RPC_STATD_OPTS
+smooth-recovery  = true
+
+depends-on = rpcbind

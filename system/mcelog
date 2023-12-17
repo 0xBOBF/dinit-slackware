@@ -1,0 +1,8 @@
+# mcelog - hardware error logging
+
+type = process
+command = /usr/sbin/mcelog --daemon --foreground
+logfile = /var/log/mcelog.log
+smooth-recovery = true
+
+depends-on = rcboot

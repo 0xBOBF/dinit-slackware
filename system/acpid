@@ -1,0 +1,7 @@
+# acpi daemon
+
+type = process
+command = /usr/sbin/acpid -f
+smooth-recovery = true
+
+depends-on = rcboot

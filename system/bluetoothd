@@ -1,0 +1,8 @@
+# bluetoothd daemon
+
+type = process
+command = /usr/sbin/bluetoothd -n
+logfile = /var/log/bluetoothd.log
+smooth-recovery = true
+
+depends-on = dbusd

@@ -1,6 +1,0 @@
-# Initialize the Logical Volume Manager.
-
-type = scripted
-command = /etc/dinit/system/scripts/lvm.sh
-restart = false
-depends-on = udev

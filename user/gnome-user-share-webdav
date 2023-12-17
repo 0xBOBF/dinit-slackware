@@ -1,0 +1,9 @@
+# gnome-user-share-webdav daemon
+
+type = process
+command = /usr/libexec/gnome-user-share-webdav
+logfile = $XDG_RUNTIME_DIR/gnome-user-share-webdav.log
+smooth-recovery = true
+
+#depends-on = 
+

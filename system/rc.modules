@@ -1,6 +1,0 @@
-# Support traditional /etc/rc.d/rc.modules customizations
-
-type = scripted
-command = /etc/dinit/system/scripts/rc.modules.sh
-restart = false
-depends-on = root-fs

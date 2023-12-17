@@ -1,0 +1,8 @@
+# elogind daemon
+
+type = process
+command = /lib64/elogind/elogind
+logfile = /var/log/elogind.log
+smooth-recovery = true
+
+depends-on = dbusd

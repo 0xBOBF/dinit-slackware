@@ -1,8 +1,0 @@
-# Start the udev service:
-
-type = scripted
-command = /etc/dinit/system/scripts/udev.sh start
-stop-command = /etc/dinit/system/scripts/udev.sh stop
-logfile = /var/log/dinit/udevd.log
-restart = false
-depends-on = kernel-fs

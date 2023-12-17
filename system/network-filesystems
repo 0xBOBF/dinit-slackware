@@ -1,0 +1,11 @@
+# Filesystems which can be mounted after network is up.
+
+type = scripted
+command = /etc/dinit.d/scripts/network-filesystems.sh start
+restart = false
+logfile = /var/log/network-filesystems.log
+options = start-interruptible
+start-timeout = 0   # unlimited 
+
+depends-on = networkmanager
+depends-on = rpcstatd

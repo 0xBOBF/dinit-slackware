@@ -1,0 +1,14 @@
+# Auxillary (non-root) filesystems
+
+type = scripted
+command = /etc/dinit.d/scripts/filesystems.sh start
+restart = false
+logfile = /var/log/dinit-filesystems.log
+options = start-interruptible
+start-timeout = 1200   # 20 minutes
+
+depends-on = udevd
+depends-on = rootrw
+depends-on = sysctl
+waits-for = auxfscheck
+waits-for = udev-settle

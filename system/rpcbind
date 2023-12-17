@@ -1,0 +1,8 @@
+# rpcbind daemon - needed to mount nfs
+
+type = process
+env-file = /etc/default/rpc
+command = /sbin/rpcbind -f -l $RPCBIND_OPTS
+smooth-recovery  = true
+
+depends-on = rpc-pre

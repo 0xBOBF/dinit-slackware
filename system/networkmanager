@@ -1,0 +1,8 @@
+# Example networkmanager script.
+
+type = process
+command = /usr/sbin/NetworkManager -n
+smooth-recovery  = true
+
+depends-on = rcboot
+depends-on = dbusd

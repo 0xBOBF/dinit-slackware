@@ -1,6 +1,0 @@
-# Set the system time from the hardware clock
-
-type = scripted
-command = /etc/dinit/system/scripts/clock-hw.sh
-restart = false
-depends-on = clock-sys

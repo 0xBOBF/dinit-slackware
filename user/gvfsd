@@ -1,0 +1,10 @@
+# gvfsd daemon
+# wireplumber activates this daemon over dbus at startup,
+# this dinit process and the gvfsd-fuse process allow us
+# to control the daemon instead.
+
+type = process
+command = /usr/libexec/gvfsd --no-fuse
+smooth-recovery = true
+
+depends-on = dbus

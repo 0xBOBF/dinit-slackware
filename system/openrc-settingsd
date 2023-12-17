@@ -1,0 +1,9 @@
+# openrc-settingsd daemon
+# Provices hostname1, locale1, timedate1
+
+type = process
+command = /usr/libexec/openrc-settingsd
+logfile = /var/log/openrc-settingsd.log
+smooth-recovery = true
+
+depends-on = dbusd

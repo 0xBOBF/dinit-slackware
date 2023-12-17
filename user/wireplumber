@@ -1,0 +1,9 @@
+# wireplumber daemon
+
+type = process
+command = /usr/bin/wireplumber
+logfile = $XDG_RUNTIME_DIR/wireplumber.log
+smooth-recovery = true
+
+depends-on = pipewire-pulse
+depends-on = gvfsd-fuse

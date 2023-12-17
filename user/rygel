@@ -1,0 +1,8 @@
+# rygel daemon
+
+type = process
+command = /usr/bin/rygel
+logfile = $XDG_RUNTIME_DIR/rygel.log
+smooth-recovery = true
+
+#depends-on = 

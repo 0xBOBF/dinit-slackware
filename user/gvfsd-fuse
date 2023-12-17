@@ -1,0 +1,10 @@
+# gvfsd-fuse daemon
+# Usually gvfsd starts gvfsd-fuse automatically, but we disable that
+# and start it with dinit to monitor it.
+
+type = process
+command = /usr/libexec/gvfsd-fuse $XDG_RUNTIME_DIR/gvfsd -f
+logfile = $HOME/fuse.log
+smooth-recovery = true
+
+depends-on = gvfsd

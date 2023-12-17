@@ -1,4 +1,6 @@
+# dbus daemon
+
 type = process
-command = /etc/dinit/user/scripts/dbus.sh --print-address 3
-smooth-recovery=true
-ready-notification = pipefd:3
+command = /usr/bin/dbus-daemon --session --address=unix:path=$XDG_RUNTIME_DIR/bus
+logfile = $XDG_RUNTIME_DIR/dbus.log
+smooth-recovery = true

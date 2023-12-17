@@ -1,6 +1,0 @@
-# Set the tick and frequency for the system clock.
-
-type = scripted
-command = /etc/dinit/system/scripts/clock-sys.sh
-restart = false
-depends-on = kernel-fs

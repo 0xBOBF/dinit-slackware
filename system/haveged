@@ -1,0 +1,8 @@
+# Random number generator based on the HAVEGE algorithm
+
+type = process
+command = /sbin/haveged -F -w 1024 -v 1
+logfile = /var/log/haveged.log
+smooth-recovery = true
+
+depends-on = rcboot

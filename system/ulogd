@@ -1,0 +1,8 @@
+# ulogd - netfilter/iptables logging daemon
+
+type = process
+command = /usr/sbin/ulogd
+logfile = /var/log/ulogd.log
+smooth-recovery = true
+
+depends-on = rcboot

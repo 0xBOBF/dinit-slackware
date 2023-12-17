@@ -1,0 +1,8 @@
+# systemd-user-service-listener
+
+type = process
+command = /etc/dinit.d/scripts/systemd-user-service-listener.sh
+logfile = $XDG_RUNTIME_DIR/systemd-user-service-listener.log
+smooth-recovery = true
+
+depends-on = dbus

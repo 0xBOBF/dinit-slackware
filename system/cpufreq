@@ -1,0 +1,6 @@
+type = scripted
+# Available governors are powersave and performance
+command = /etc/dinit.d/scripts/cpufreq.sh performance
+logfile = /var/log/cpufreq.log
+
+depends-on = rcboot

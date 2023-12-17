@@ -1,0 +1,8 @@
+# autofs automounter
+
+type = process
+env-file = /etc/default/autofs
+command = /usr/sbin/automount -f $OPTIONS
+smooth-recovery  = true
+
+depends-on = rpcstatd

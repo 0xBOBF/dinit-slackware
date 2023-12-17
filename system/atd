@@ -1,0 +1,10 @@
+# at daemon
+type = process
+#env-file = /etc/default/atd
+#command = /usr/sbin/atd -d $ATD_OPTS
+# Doesnt work with spaces in $ATD_OPTS ?
+command = /usr/sbin/atd -d -b 15 -l 1
+logfile = /var/log/atd.log
+smooth-recovery = true
+
+depends-on = rcboot
