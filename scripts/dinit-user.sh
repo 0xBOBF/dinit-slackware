@@ -52,8 +52,14 @@ if [ -n "$PKEXEC_UID" ] && [ -n "$1" ]; then
     "start")
       # Start a user dinit instance, and put the dinitctl socket 
       # in the $XDG_RUNTIME_DIR so the user can use dinitctl to 
-      # control their services:
-      /sbin/dinit -q -p $XDG_RUNTIME_DIR/dinitctl -d /etc/dinit.d/user &
+      # control their services. Also use a system-wide user service
+      # location at /etc/dinit.d/user so that all users can access 
+      # some common services. A boot service in $HOME/.config will
+      # still override the system-wide services:
+      /sbin/dinit -q \
+        -p "$XDG_RUNTIME_DIR/dinitctl" \
+        -d "$HOME/.config/dinit.d" \
+        -d "/etc/dinit.d/user" &
       ;;
     "stop")
       # Issue the shutdown command as the user, which will stop all
