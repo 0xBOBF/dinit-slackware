@@ -5,7 +5,6 @@ alsa
 atalk
 bind
 cryptsetup
-cups
 dnsmasq
 dovecot
 firewall
@@ -26,7 +25,6 @@ lvm
 mysqld
 nfsd
 nslcd
-ntpd
 openldap
 openvpn
 pacct
