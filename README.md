@@ -30,7 +30,7 @@ E.g 1: For console logins, add the following line to `/etc/pam.d/login`, right b
 
 E.g 2: For GDM logins, add the following line to `/etc/pam.d/gdm-password`, right before `pam_elogind.so` is started:
 ```
--session optional       pam_exec.so /etc/dinit.d/scripts/dinit-user.sh
+-session        optional        pam_exec.so /etc/dinit.d/scripts/dinit-user.sh
 ```
 
 The same line can also be used in `sddm` to used dinit user services from that display manager.
