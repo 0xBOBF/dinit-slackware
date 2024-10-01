@@ -1,0 +1,6 @@
+#!/bin/bash
+#
+# Wrapper script used to exec dinit at system init, while passing
+# dinit command line parameters.
+# 
+exec /sbin/dinit --services-dir /etc/dinit.d/system

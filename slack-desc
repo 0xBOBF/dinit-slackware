@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+     |-----handy-ruler------------------------------------------------------|
+dinit: dinit (Dinit Init System and Service Manager)
+dinit:
+dinit: Dinit is a service supervisor with dependency support. It can be used
+dinit: for supervising user owned services (e.g. user daemons), and/or system
+dinit: services. Dinit is also capable of running as the system init program,
+dinit: in which case the system service directory must be set up to bring up
+dinit: all necessary services from boot to login. Example scripts are
+dinit: provided in the package.
+dinit:
+dinit: https://github.com/davmac314/dinit
+dinit:
