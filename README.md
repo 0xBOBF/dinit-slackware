@@ -24,10 +24,14 @@ System services are managed by invoking `dinitctl` as the root user, while user 
 The provided script called `/etc/dinit.d/scripts/dinit-user.sh` can be used to start and stop the user instance of dinit from the PAM stack by being hooked from pam using the `pam_exec.so` module.
 
 E.g 1: For console logins, add the following line to `/etc/pam.d/login`, right before `pam_elogind.so` is started:
-`-session        optional        pam_exec.so /etc/dinit.d/scripts/dinit-user.sh`
+```
+-session        optional        pam_exec.so /etc/dinit.d/scripts/dinit-user.sh
+```
 
 E.g 2: For GDM logins, add the following line to `/etc/pam.d/gdm-password`, right before `pam_elogind.so` is started:
-`-session optional       pam_exec.so /etc/dinit.d/scripts/dinit-user.sh`
+```
+-session optional       pam_exec.so /etc/dinit.d/scripts/dinit-user.sh
+```
 
 The same line can also be used in `sddm` to used dinit user services from that display manager.
 
