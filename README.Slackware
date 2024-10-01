@@ -1,15 +1,9 @@
 # Overview:
 
-This dinit package conflicts with Slackware's sysvinit package. 
-Installing this package will overwrite the
-/sbin/{shutdown,half,poweroff,reboot} binaries that come from sysvinit.
-The sysvinit package should be removed if intending to use dinit as
-system init. Steps on how to switch init systems is included later in
-this readme.
-
-This package also symlinks /sbin/dinitctl to /usr/bin/dinitctl so that 
-regular users can use dinitctl from their regular path. This is useful 
-for users who want to control user services with dinit.
+Using dinit as init conflicts with Slackware's sysvinit package, and 
+it's included init and shutdown programs. The sysvinit package should 
+be removed if intending to use dinit as init. Steps on how to switch 
+init systems are shown below.
 
 # Switching to dinit as init:
 
@@ -45,7 +39,7 @@ as the main init process.
 # Switching to sysvinit as init:
 
 Assuming you are using dinit as installed above, the following steps will revert the 
-system to using sysvinit as root. Note: You will need a copy of the sysvinit Slackware
+system to using sysvinit as init. Note: You will need a copy of the sysvinit Slackware
 package from a Slackware mirror, install DVD/iso, or online mirror.
 
 1. Run the dinit symlink convenience script to remove the dinit symlinks:
