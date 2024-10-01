@@ -129,8 +129,8 @@ $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a doc/linux $PKG/usr/doc/$PRGNAM-$VERSION/examples
 
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
-cat $CWD/README.md > $PKG/usr/doc/$PRGNAM-$VERSION/README.SlackBuild
-cat $CWD/README.Slackware > $PKG/usr/doc/$PRGNAM-$VERSION/README.Slackware
+cat $CWD/README.md > $PKG/usr/doc/$PRGNAM-$VERSION/README.SlackBuild.md
+cat $CWD/README.Slackware.md > $PKG/usr/doc/$PRGNAM-$VERSION/README.Slackware.md
 cat $CWD/TODO > $PKG/usr/doc/$PRGNAM-$VERSION/TODO.SlackBuild
 
 mkdir -p $PKG/install
