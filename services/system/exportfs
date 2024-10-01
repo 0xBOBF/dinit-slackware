@@ -1,0 +1,7 @@
+# exportfs
+
+type = scripted
+command = /usr/sbin/exportfs -rv
+logfile = /var/log/exportfs.log
+
+depends-on = rpcstatd

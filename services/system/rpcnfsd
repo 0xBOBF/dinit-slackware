@@ -1,0 +1,9 @@
+# rpc.nfsd daemon
+# Defaults to 8 threads on its own.
+
+type = scripted
+env-file = /etc/default/nfs
+command = /usr/sbin/rpc.nfsd $RPC_NFSD_OPTS
+logfile = /var/log/nfsd.log
+
+depends-on = rpcrquotad

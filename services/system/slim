@@ -1,9 +1,8 @@
 # Example display manager script:
 
 type = process
-command = /usr/sbin/gdm-bin
-#command = /usr/bin/sddm
+command = /usr/bin/slim
 smooth-recovery = true
 
 depends-on = rcboot
-depends-on = elogind
+depends-on = dbusd

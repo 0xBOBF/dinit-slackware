@@ -63,7 +63,7 @@ if [ "$1" != "stop" ]; then
   /bin/setterm -blank 15 -powerdown 60
   
   # Set console font:
-  /usr/bin/setfont -v ter-120b
+  /usr/bin/setfont -v ter-v32b
 
 
   # Set the hostname:

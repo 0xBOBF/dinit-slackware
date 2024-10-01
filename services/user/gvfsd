@@ -5,6 +5,7 @@
 
 type = process
 command = /usr/libexec/gvfsd --no-fuse
+logfile = $XDG_RUNTIME_DIR/gvfsd.log
 smooth-recovery = true
 
 depends-on = dbus

@@ -1,0 +1,8 @@
+# Network time protocol daemon
+
+type = process
+command = /usr/sbin/ntpd -d -g -u ntp:ntp
+logfile = /var/log/ntpd.log
+smooth-recovery = true
+
+depends-on = rcboot

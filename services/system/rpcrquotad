@@ -1,0 +1,8 @@
+# rpc.rquotad daemon - needed for nfsd
+
+type = process
+env-file = /etc/default/rpc
+command = /usr/sbin/rpc.rquotad -F $RPC_RQUOTAD_OPTS
+smooth-recovery = true
+
+depends-on = exportfs

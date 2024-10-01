@@ -1,0 +1,8 @@
+# rpc.mountd daemon - needed for nfsd
+
+type = process
+env-file = /etc/default/rpc
+command = /usr/sbin/rpc.mountd -F $RPC_MOUNTD_OPTS
+smooth-recovery = true
+
+depends-on = rpcnfsd

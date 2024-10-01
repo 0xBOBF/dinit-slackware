@@ -1,0 +1,8 @@
+# Common Unix Printing System (CUPS)
+
+type = process
+command = /usr/sbin/cupsd -f
+logfile = /var/log/cups.log
+smooth-recovery = true
+
+depends-on = rcboot

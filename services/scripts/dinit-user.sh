@@ -17,16 +17,16 @@
 if [ -n "$PAM_USER" ] && [ -n "$PAM_TYPE" ]; then 
   uid="$(id -u "$PAM_USER" )"
   [ "$uid" -lt "1000" ] && exit 0
-  export XDG_RUNTIME_DIR="/run/user/$uid" 
   SESSION_CNT="$(loginctl show-user "$PAM_USER" | sed -n 's/^Sessions=//p' | wc -w)" 
   case "$PAM_TYPE" in
     "open_session")
       [ "$SESSION_CNT" -ge "1" ] && exit 0
-      if [ ! -d "$XDG_RUNTIME_DIR" ]; then
-        mkdir -p "$XDG_RUNTIME_DIR" && \
-          chown "$PAM_USER" "$XDG_RUNTIME_DIR" && \
-          chmod 0700 "$XDG_RUNTIME_DIR"
-      fi
+      # Create the XDG_RUNTIME_DIR so its available to our scripts.
+      # Note: This must be a tmpfs mountpoint, with proper permissions, 
+      #       or it will be clobbered and made anew by elogind!
+      mkdir -m700 "/run/user/$uid"
+      mount -t tmpfs -o uid=$uid,gid=100,mode=700 tmpfs "/run/user/$uid"
+
       /usr/bin/pkexec --user "$PAM_USER" "$0" "start" &
       ;;
     "close_session")
@@ -37,16 +37,16 @@ if [ -n "$PAM_USER" ] && [ -n "$PAM_TYPE" ]; then
       exit 0
       ;;
   esac
-  # A small delay before returning to PAM gives time for a user dbus session to start
-  # from a dinit service. If the address is set to "unix:path=$XDG_RUNTIME_DIR/bus", then
-  # pam_elogind.so can detect and export the address to the user's environment. Note that 
-  # pam_elogind.so should then be run right after this script in the PAM stack.
-  # Time may need to be increased on slower CPUs:
+  # A slight pause to allow the forked user version of this
+  # script to set up inotifywaits on XDG_RUNTIME_DIR:
   sleep 1
 fi
 
 # The following bit runs as the user (through pkexec):
 if [ -n "$PKEXEC_UID" ] && [ -n "$1" ]; then
+  # Create the XDG_RUNTIME_DIR so its available to our scripts.
+  # Note: This must be a tmpfs mountpoint, with proper permissions, 
+  #       or it will be clobbered and made anew by elogind!
   export XDG_RUNTIME_DIR="/run/user/$(id -u $USER)"
   case "$1" in
     "start")
